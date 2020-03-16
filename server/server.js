@@ -12,7 +12,6 @@ const kafka = require('kafka-node')
 const client = new kafka.KafkaClient({kafkaHost: '127.0.0.1:9092'})
 const consumer = new kafka.Consumer(client, [{topic: 'CasStyleOptionActivationExceptions', partition: 0}], {autoCommit: false})
 
-
 consumer.on('message', message => {
   logger.info(message.value)
 })
