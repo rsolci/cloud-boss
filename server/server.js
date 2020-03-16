@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const expressWs = require('express-ws');
 require('app-module-path/register');
 require('dotenv').config();
 
@@ -7,6 +8,8 @@ const logger = require('tools/Logger').getLogger("server");
 
 const app = express();
 const port = process.env.PORT || 5000
+
+expressWs(app)
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
