@@ -8,14 +8,6 @@ const logger = require('tools/Logger').getLogger("server");
 const app = express();
 const port = process.env.PORT || 5000
 
-const kafka = require('kafka-node')
-const client = new kafka.KafkaClient({kafkaHost: '127.0.0.1:9092'})
-const consumer = new kafka.Consumer(client, [{topic: 'CasStyleOptionActivationExceptions', partition: 0}], {autoCommit: false})
-
-consumer.on('message', message => {
-  logger.info(message.value)
-})
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -27,7 +19,7 @@ const requestLogger = (req, resp, next) => {
 app.use(requestLogger)
 
 // Standard HTTP APIs
-//app.use(require('routes/routes'))
+app.use(require('routes/routes'))
 
 app.on('ready', function () {
   app.listen(port, () => logger.info(`Listening on port ${port}`));
