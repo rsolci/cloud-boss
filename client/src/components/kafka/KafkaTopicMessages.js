@@ -3,7 +3,7 @@ import useWebSocket, { ReadyState } from 'react-use-websocket';
 
 const KafkaTopicMessages = ({clientId, topicName}) => {
   const [messageHistory, setMessageHistory] = useState([]);
-  const [sendMessage, lastMessage, readyState, getWebSocket] = useWebSocket(`wss://localhost:5000/api/kafka/${clientId}/topics/${topicName}/watch`);
+  const [sendMessage, lastMessage, readyState, getWebSocket] = useWebSocket(`ws://localhost:5000/api/kafka/${clientId}/topics/${topicName}/watch`);
 
   useEffect(() => {
     if (lastMessage !== null) {
@@ -20,10 +20,10 @@ const KafkaTopicMessages = ({clientId, topicName}) => {
 
   return (
     <div>
-      <span>The WebSocket is currently {connectionStatus}</span>
-      {lastMessage ? <span>Last message: {lastMessage.data}</span> : null}
+      <p>The WebSocket is currently {connectionStatus}</p>
+      {lastMessage ? <p>Last message: {lastMessage.data}</p> : null}
       <ul>
-        {messageHistory.map((message, idx) => <span key={idx}>{message.data}</span>)}
+        {messageHistory.map((message, idx) => <li key={idx}>{message.data}</li>)}
       </ul>
     </div>
   )

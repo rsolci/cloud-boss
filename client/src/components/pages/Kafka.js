@@ -47,7 +47,7 @@ const Kafka = () => {
         {topics.map(topic => <p key={topic}>{topic}</p>)}
       </div>
       {clientId &&
-        <KafkaTopicMessages clientId={clientId} topicName='CasStyleOptionActivationExceptions' />
+        <KafkaTopicMessages clientId={clientId} topicName='ChannelActivationExceptionUpdated' />
       }
     </div>
   )

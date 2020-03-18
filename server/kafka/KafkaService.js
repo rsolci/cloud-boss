@@ -73,7 +73,6 @@ const listTopics = async (clientId) => {
 const consume = (clientId, topicName, consumeFunction = () => {}) => {
   const consumer = createConsumer(clientId, topicName);
   consumer.on('message', (message) => {
-    console.log(message)
     consumeFunction(message.value)
   })
 }
