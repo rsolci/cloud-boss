@@ -7,7 +7,7 @@ const KafkaTopicMessages = ({clientId, topicName}) => {
 
   useEffect(() => {
     if (lastMessage !== null) {
-      setMessageHistory(prev => prev.concat(lastMessage));
+      setMessageHistory(prev => [lastMessage, ...prev]);
     }
   }, [lastMessage]);
 
