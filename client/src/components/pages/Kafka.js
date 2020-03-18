@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
+
 import { TextInput } from 'components/inputs'
 import { Button } from 'components/buttons'
+import { KafkaTopicMessages } from 'components/kafka'
 
 const Kafka = () => {
   const [host, setHost] = useState('');
@@ -44,6 +46,9 @@ const Kafka = () => {
       <div>
         {topics.map(topic => <p key={topic}>{topic}</p>)}
       </div>
+      {clientId &&
+        <KafkaTopicMessages clientId={clientId} topicName='CasStyleOptionActivationExceptions' />
+      }
     </div>
   )
 }

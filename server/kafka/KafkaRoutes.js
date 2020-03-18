@@ -1,10 +1,12 @@
 const app = module.exports = require('express')();
+const enableWs = require('express-ws')
+enableWs(app)
+
 const logger = require('tools/Logger').getLogger("kafka");
 
-const { connect, listTopics } = require('./KafkaService')
+const { connect, listTopics, consume } = require('./KafkaService')
 
 app.get('/kafka', async(req, resp) => {
-  // const recipes = await listRecipes()
   resp.send({success: true, data: []})
 })
 
@@ -17,4 +19,14 @@ app.post('/kafka/connect', (req, resp) => {
 app.get('/kafka/:clientId/topics', async(req, resp) => {
   const topics = await listTopics(req.params.clientId)
   resp.send({success: true, data: topics  })
+})
+
+app.ws('/kafka/:clientId/topics/:topicName/watch', (ws, req) => {
+  const clientId = req.params.clientId;
+  const topicName = req.params.topicName;
+  logger.info(`Client ${clientId} watching messages from topic ${topicName}`)
+  const onMessage = (message) => {
+    ws.send(message);
+  }
+  consume(clientId, topicName, onMessage);
 })

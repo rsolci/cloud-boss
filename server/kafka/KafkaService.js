@@ -36,6 +36,19 @@ const getAdminNode = (clientId) => {
   return KAFKA_CONNECTIONS[clientId].admin
 }
 
+const createConsumer = (clientId, topicName) => {
+  logger.info(`Creating consumer for clientId: (${clientId}) for topic ${topicName}`)
+  const existingConnection = KAFKA_CONNECTIONS[clientId];
+  if (!existingConnection || !existingConnection.client) {
+    throw new Error('No connection for this clientId')
+  }
+  const consumer = new kafka.Consumer(existingConnection.client, [
+    { topic: topicName, partition: 0}
+  ], { autoCommit: false })
+  KAFKA_CONNECTIONS[clientId] = {...existingConnection, consumer: consumer}
+  return consumer;
+}
+
 const connect = (host, port) => {
   const clientId = v4();
   logger.info(`Generated id: ${clientId} for conection to ${host}:${port}`)
@@ -57,4 +70,12 @@ const listTopics = async (clientId) => {
   })
 }
 
-module.exports = { connect, listTopics }
+const consume = (clientId, topicName, consumeFunction = () => {}) => {
+  const consumer = createConsumer(clientId, topicName);
+  consumer.on('message', (message) => {
+    console.log(message)
+    consumeFunction(message.value)
+  })
+}
+
+module.exports = { connect, listTopics, consume }

@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const app = module.exports = require('express')();
+const app = module.exports = express();
 
 // Health check endpoint
 app.get('/health', (req, resp) => {
