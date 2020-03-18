@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from '@reach/router'
 
 import { TextInput } from 'components/inputs'
 import { Button } from 'components/buttons'
-import { KafkaTopicMessages } from 'components/kafka'
 
 const Kafka = () => {
   const [host, setHost] = useState('');
@@ -44,11 +44,8 @@ const Kafka = () => {
       <Button onClick={connect}>Connect</Button>
       {clientId && <p>{clientId}</p>}
       <div>
-        {topics.map(topic => <p key={topic}>{topic}</p>)}
+        {topics.map(topic => <Link to={`/kafka/${clientId}/topics/${topic}`}>{topic}</Link>)}
       </div>
-      {clientId &&
-        <KafkaTopicMessages clientId={clientId} topicName='ChannelActivationExceptionUpdated' />
-      }
     </div>
   )
 }
