@@ -3,7 +3,6 @@ const kafka = require('kafka-node')
 
 const logger = require('tools/Logger').getLogger("kafka");
 
-const client = new kafka.KafkaClient({kafkaHost: '127.0.0.1:9092'})
 // const consumer = new kafka.Consumer(client, [{topic: 'CasStyleOptionActivationExceptions', partition: 0}], {autoCommit: false})
 
 // consumer.on('message', message => {
@@ -49,6 +48,17 @@ const createConsumer = (clientId, topicName) => {
   return consumer;
 }
 
+const createProducer = (clientId) => {
+  logger.info(`Creating producer for clientId: (${clientId})`)
+  const existingConnection = KAFKA_CONNECTIONS[clientId];
+  if (!existingConnection || !existingConnection.client) {
+    throw new Error('No connection for this clientId')
+  }
+  const producer = new kafka.Producer(existingConnection.client)
+  KAFKA_CONNECTIONS[clientId] = {...existingConnection, producer: producer}
+  return producer;
+}
+
 const connect = (host, port) => {
   const clientId = v4();
   logger.info(`Generated id: ${clientId} for conection to ${host}:${port}`)
@@ -77,4 +87,14 @@ const consume = (clientId, topicName, consumeFunction = () => {}) => {
   })
 }
 
-module.exports = { connect, listTopics, consume }
+const produce = (clientId, topicName, message, callback = ()=>{}) => {
+  const producer = createProducer(clientId);
+  producer.send([
+    {
+      topic: topicName,
+      messages: message
+    }
+  ], callback)
+}
+
+module.exports = { connect, listTopics, consume, produce }
