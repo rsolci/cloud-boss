@@ -1,6 +1,5 @@
 const app = require('express')();
 const bodyParser = require('body-parser');
-// const server = require('http').Server(app);
 const enableWs = require('express-ws')
 
 require('app-module-path/register');
@@ -38,7 +37,6 @@ app.use(requestLogger)
 app.use(require('routes/routes'))
 
 app.on('ready', function () {
-  // server.listen(port, () => logger.info(`Listening on port ${port}`))
   app.listen(port, () => logger.info(`Listening on port ${port}`));
 });
 
