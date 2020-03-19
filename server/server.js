@@ -7,17 +7,6 @@ require('dotenv').config();
 
 enableWs(app)
 
-// Example Websocket path
-app.ws('/echo', (ws, req) => {
-  ws.on('message', msg => {
-      ws.send(msg)
-  })
-
-  ws.on('close', () => {
-      console.log('WebSocket was closed')
-  })
-})
-
 const logger = require('tools/Logger').getLogger("server");
 
 const port = process.env.PORT || 5000
