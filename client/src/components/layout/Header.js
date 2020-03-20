@@ -2,7 +2,7 @@ import React from 'react'
 
 const Header = () => {
   return (
-    <div>Tools for developers</div>
+    <div>Cloud-Boss</div>
   )
 }
 

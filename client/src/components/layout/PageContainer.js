@@ -2,7 +2,7 @@ import React from 'react'
 
 const PageContainer = ({children}) => {
   return (
-    <main className='container'>
+    <main className='container px-5 py-5'>
       {children}
     </main>
   )
