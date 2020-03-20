@@ -31,5 +31,9 @@ app.ws('/kafka/:clientId/topics/:topicName/watch', (ws, req) => {
   ws.on('message', (message) => {
     produce(clientId, topicName, message)
   });
-  consume(clientId, topicName, onMessage);
+  try {
+    consume(clientId, topicName, onMessage);
+  } catch (error) {
+    logger.error(`Received error while consuming message`, error)
+  }
 })
