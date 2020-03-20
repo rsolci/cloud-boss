@@ -3,6 +3,7 @@ import { Link } from '@reach/router'
 
 import { TextInput } from 'components/inputs'
 import { Button } from 'components/buttons'
+import { PageTitle } from 'components/layout'
 
 const Kafka = () => {
   const [host, setHost] = useState('');
@@ -39,12 +40,38 @@ const Kafka = () => {
 
   return (
     <div>
+      <PageTitle title="Kafka manager" />
       <TextInput placeholder="kafka host" value={host} onChange={(e) => setHost(e.target.value)}/>
       <TextInput placeholder="kafka port" value={port} onChange={(e) => setPort(e.target.value)}/>
       <Button onClick={connect}>Connect</Button>
-      {clientId && <p>{clientId}</p>}
+      {clientId &&
+        <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+          <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
+            <table className="min-w-full leading-normal">
+              <thead>
+                <tr>
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    Topics
+                </th>
+                </tr>
+              </thead>
+              <tbody>
+                {topics.map(topic => 
+                  <tr>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      <Link to={`/kafka/${clientId}/topics/${topic}`}>
+                      {topic}
+                      </Link>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      }
       <div>
-        {topics.map(topic => <Link to={`/kafka/${clientId}/topics/${topic}`}>{topic}</Link>)}
+        
       </div>
     </div>
   )
