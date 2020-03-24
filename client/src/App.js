@@ -4,15 +4,15 @@ import { Router } from "@reach/router";
 
 import { Home, Kafka, KafkaTopic } from 'components/pages';
 import { PageContainer, Sidebar, Header } from 'components/layout';
-import { LinkButton } from 'components/buttons';
+import { MenuBar } from 'components/menubar'
 
 function App() {
   return (
-    <div className="container mx-5 flex flex-col">
+    <div className="mx-0 flex flex-col bg-gray-100 min-h-screen w-full">
       <Header/>
       <div className="flex">
         <Sidebar>
-          <LinkButton to="kafka">kafka</LinkButton>
+          <MenuBar/>
         </Sidebar>
         <PageContainer>
           <Router>
