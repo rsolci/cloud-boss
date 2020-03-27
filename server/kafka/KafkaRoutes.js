@@ -4,7 +4,7 @@ enableWs(app)
 
 const logger = require('tools/Logger').getLogger("kafka");
 
-const { connect, listTopics, consume, produce } = require('./KafkaService')
+const { connect, listTopics, consume, produce, closeConsumer } = require('./KafkaService')
 
 app.get('/kafka', async(req, resp) => {
   resp.send({success: true, data: []})
@@ -26,11 +26,19 @@ app.ws('/kafka/:clientId/topics/:topicName/watch', (ws, req) => {
   const topicName = req.params.topicName;
   logger.info(`Client ${clientId} watching messages from topic ${topicName}`)
   const onMessage = (message) => {
-    ws.send(message);
+    try {
+      ws.send(message);
+    } catch (error) {
+      logger.error('Error while trying to send message to websocket', error)
+    }
   }
   ws.on('message', (message) => {
     produce(clientId, topicName, message)
   });
+  ws.on('close', () => {
+    logger.info('connection closed');
+    closeConsumer(clientId, topicName);
+  })
   try {
     consume(clientId, topicName, onMessage);
   } catch (error) {

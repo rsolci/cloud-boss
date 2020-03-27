@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from '@reach/router'
 
-import { TextInput } from 'components/inputs'
+import { LabeledInput } from 'components/inputs'
 import { Button } from 'components/buttons'
 import { PageTitle } from 'components/layout'
 
@@ -41,8 +41,8 @@ const Kafka = () => {
   return (
     <div>
       <PageTitle title="Kafka manager" />
-      <TextInput placeholder="kafka host" value={host} onChange={(e) => setHost(e.target.value)}/>
-      <TextInput placeholder="kafka port" value={port} onChange={(e) => setPort(e.target.value)}/>
+      <LabeledInput label='Kafka Host' name='kafka-host' placeholder='127.0.0.1' value={host} onChange={(e) => setHost(e.target.value)}/>
+      <LabeledInput label='Kafka Port' name='kafka-port' placeholder='9092' value={port} onChange={(e) => setPort(e.target.value)}/>
       <Button onClick={connect}>Connect</Button>
       {clientId &&
         <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
@@ -57,7 +57,7 @@ const Kafka = () => {
               </thead>
               <tbody>
                 {topics.map(topic => 
-                  <tr>
+                  <tr key={topic}>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                       <Link to={`/kafka/${clientId}/topics/${topic}`}>
                       {topic}

@@ -48,6 +48,19 @@ const createConsumer = (clientId, topicName) => {
   return consumer;
 }
 
+const closeConsumer = (clientId, topicName) => {
+  logger.info(`Closing consumer for clientId: (${clientId}) for topic ${topicName}`)
+  const existingConnection = KAFKA_CONNECTIONS[clientId];
+  if (!existingConnection || !existingConnection.client) {
+    throw new Error('No connection for this clientId')
+  }
+  const existingConsumer = existingConnection.consumer;
+  if (!existingConsumer) {
+    existingConsumer.close(() => {});
+  }
+  delete KAFKA_CONNECTIONS[clientId].consumer;
+}
+
 const createProducer = (clientId) => {
   logger.info(`Creating producer for clientId: (${clientId})`)
   const existingConnection = KAFKA_CONNECTIONS[clientId];
@@ -97,4 +110,4 @@ const produce = (clientId, topicName, message, callback = ()=>{}) => {
   ], callback)
 }
 
-module.exports = { connect, listTopics, consume, produce }
+module.exports = { connect, listTopics, consume, produce, closeConsumer }
