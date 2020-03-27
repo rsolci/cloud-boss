@@ -10,7 +10,7 @@ function App() {
   return (
     <div className="mx-0 flex flex-col bg-gray-100 min-h-screen w-full">
       <Header/>
-      <div className="flex">
+      <div className="flex bg-gray-200">
         <Sidebar>
           <MenuBar/>
         </Sidebar>
