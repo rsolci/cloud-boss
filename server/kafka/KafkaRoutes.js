@@ -25,7 +25,6 @@ app.get('/kafka/:clientId/topics/:topicName/config', async(req, resp) => {
   const clientId = req.params.clientId;
   const topicName = req.params.topicName;
   const topicConfig = await getTopicConfig(clientId, topicName);
-  console.info("here")
   resp.send({success: true, data: topicConfig})
 })
 
@@ -37,7 +36,8 @@ app.ws('/kafka/:clientId/topics/:topicName/watch', (ws, req) => {
     try {
       ws.send(message);
     } catch (error) {
-      logger.error('Error while trying to send message to websocket', error)
+      logger.error('Error while trying to send message to websocket. Closing consumer', error)
+      closeConsumer(clientId, topicName);
     }
   }
   ws.on('message', (message) => {

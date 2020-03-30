@@ -74,11 +74,8 @@ const KafkaTopicMessages = ({clientId, topicName}) => {
 
   return (
     <div className='flex flex-col'>
-      <div className='h-12'>
-        <p>Topic: {topicName}</p>
-        <p>Websocket connection: {connectionStatus}</p>
-      </div>
-      <div className='h-12'>
+      <p>Messages: </p>
+      <div>
         {socketOpen && <div>
           <TextInput value={messageToSend} onChange={(e) => setMessageToSend(e.target.value)} />
           <Button onClick={() => sendMessage(messageToSend)}>Send</Button>
@@ -95,6 +92,9 @@ const KafkaTopicMessages = ({clientId, topicName}) => {
           </ul>
           <div className="fadeout absolute fixed w-full h-4 bottom-0 left-0"/>
         </div>
+      </div>
+      <div className='h-12'>
+        <p>Websocket connection: {connectionStatus}</p>
       </div>
     </div>
   )

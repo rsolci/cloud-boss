@@ -119,7 +119,17 @@ const getTopicConfig = (clientId, topicName) => {
         resourceName: topicName,
         configNames: []
       }]
-    }, (err, res) => {console.info(res);resolve(res);})
+    }, (err, res) => {
+      if(!res && !res[0]) {
+        reject(err);
+      } else {
+        const configEntries = res[0].configEntries;
+        resolve(configEntries.map(configEntry => {
+          return {name: configEntry.configName, value: configEntry.configValue}
+        }))
+      }
+    })
+    // TODO handle err
   })
 }
 
