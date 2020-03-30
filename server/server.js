@@ -17,6 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const requestLogger = (req, resp, next) => {
   logger.info(`[${req.method}] -> ${req.path}`)
   next()
+  logger.info(`${resp.statusCode}`)
 }
 
 app.use(requestLogger)

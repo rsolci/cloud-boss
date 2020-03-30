@@ -110,4 +110,17 @@ const produce = (clientId, topicName, message, callback = ()=>{}) => {
   ], callback)
 }
 
-module.exports = { connect, listTopics, consume, produce, closeConsumer }
+const getTopicConfig = (clientId, topicName) => {
+  return new Promise((resolve, reject) => {
+    const admin = getAdminNode(clientId);
+    admin.describeConfigs({
+      resources: [{
+        resourceType: admin.RESOURCE_TYPES.topic,
+        resourceName: topicName,
+        configNames: []
+      }]
+    }, (err, res) => {console.info(res);resolve(res);})
+  })
+}
+
+module.exports = { connect, listTopics, consume, produce, closeConsumer, getTopicConfig }

@@ -4,7 +4,7 @@ enableWs(app)
 
 const logger = require('tools/Logger').getLogger("kafka");
 
-const { connect, listTopics, consume, produce, closeConsumer } = require('./KafkaService')
+const { connect, listTopics, consume, produce, closeConsumer, getTopicConfig } = require('./KafkaService')
 
 app.get('/kafka', async(req, resp) => {
   resp.send({success: true, data: []})
@@ -19,6 +19,14 @@ app.post('/kafka/connect', (req, resp) => {
 app.get('/kafka/:clientId/topics', async(req, resp) => {
   const topics = await listTopics(req.params.clientId)
   resp.send({success: true, data: topics  })
+})
+
+app.get('/kafka/:clientId/topics/:topicName/config', async(req, resp) => {
+  const clientId = req.params.clientId;
+  const topicName = req.params.topicName;
+  const topicConfig = await getTopicConfig(clientId, topicName);
+  console.info("here")
+  resp.send({success: true, data: topicConfig})
 })
 
 app.ws('/kafka/:clientId/topics/:topicName/watch', (ws, req) => {
