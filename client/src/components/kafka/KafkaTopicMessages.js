@@ -86,12 +86,15 @@ const KafkaTopicMessages = ({clientId, topicName}) => {
       </div>
       <div className='flex-grow'>
         {lastMessage ? <p>Last message: {lastMessage.data}</p> : null}
-        <ul className='bg-white border shadow-inner shadow-sm px-3 py-2 overflow-v-auto'>
-          {messageHistory.map((messageObj, idx) => <li key={idx} className='mb-1'>
-            <span className='bg-gray-300 text-xs rounded-sm px-1 mr-1'>{format(messageObj.timestamp, 'HH:mm:SS')}</span>
-            <span>{messageObj.message.data}</span>
-          </li>)}
-        </ul>
+        <div className='bg-white border shadow-inner shadow-sm relative'>
+          <ul className='px-3 py-2 h-64 overflow-y-auto'>
+            {messageHistory.map((messageObj, idx) => <li key={idx} className='mb-1'>
+              <span className='bg-gray-300 text-xs rounded-sm px-1 mr-1'>{format(messageObj.timestamp, 'HH:mm:SS')}</span>
+              <span>{messageObj.message.data}</span>
+            </li>)}
+          </ul>
+          <div className="fadeout absolute fixed w-full h-4 bottom-0 left-0"/>
+        </div>
       </div>
     </div>
   )

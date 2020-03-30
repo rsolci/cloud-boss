@@ -10912,6 +10912,11 @@ video {
   transition-duration: 1000ms;
 }
 
+.fadeout {
+  background: rgb(255,255,255);
+  background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+}
+
 @media (min-width: 640px) {
   .sm\:sr-only {
     position: absolute;
