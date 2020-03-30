@@ -68,9 +68,6 @@ const KafkaConnect = () => {
           </div>
         </div>
       }
-      <div>
-        
-      </div>
     </div>
   )
 }

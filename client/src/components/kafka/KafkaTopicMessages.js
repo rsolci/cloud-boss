@@ -73,7 +73,7 @@ const KafkaTopicMessages = ({clientId, topicName}) => {
   const socketOpen = readyState === ReadyState.OPEN;
 
   return (
-    <div className='flex flex-col max-h-full'>
+    <div className='flex flex-col'>
       <div className='h-12'>
         <p>Topic: {topicName}</p>
         <p>Websocket connection: {connectionStatus}</p>
@@ -84,9 +84,9 @@ const KafkaTopicMessages = ({clientId, topicName}) => {
           <Button onClick={() => sendMessage(messageToSend)}>Send</Button>
         </div>}
       </div>
-      <div className='flex-grow overflow-hidden'>
+      <div className='flex-grow'>
         {lastMessage ? <p>Last message: {lastMessage.data}</p> : null}
-        <ul className='bg-white border shadow-inner shadow-sm px-3 py-2'>
+        <ul className='bg-white border shadow-inner shadow-sm px-3 py-2 overflow-v-auto'>
           {messageHistory.map((messageObj, idx) => <li key={idx} className='mb-1'>
             <span className='bg-gray-300 text-xs rounded-sm px-1 mr-1'>{format(messageObj.timestamp, 'HH:mm:SS')}</span>
             <span>{messageObj.message.data}</span>
