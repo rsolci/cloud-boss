@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Router } from "@reach/router";
 
-import { Home, Kafka, KafkaTopic } from 'components/pages';
+import { Home, Kafka, KafkaTopic, KafkaConnect } from 'components/pages';
 import { PageContainer, Sidebar, Header } from 'components/layout';
 import { MenuBar } from 'components/menubar'
 
@@ -17,8 +17,10 @@ function App() {
         <PageContainer>
           <Router>
             <Home path='/' />
-            <Kafka path='/kafka' />
-            <KafkaTopic path='/kafka/:clientId/topics/:topic' />
+            <Kafka path='kafka'>
+              <KafkaConnect path='/' />
+              <KafkaTopic path=':clientId/topics/:topic' />
+            </Kafka>
           </Router>
         </PageContainer>
       </div>
