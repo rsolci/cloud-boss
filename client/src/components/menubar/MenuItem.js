@@ -6,7 +6,6 @@ const MenuItem = ({children, to, icon}) => {
   return (
     <Match path={`${to}/*`}>
       {({match}) => {
-        console.info(match)
         const activeClass = match ? 'border-r-4 border-gray-400' : ''
         return (
         <Link to={to}>
