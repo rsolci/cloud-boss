@@ -3,7 +3,6 @@ import { Link } from '@reach/router'
 
 import { LabeledInput } from 'components/inputs'
 import { Button } from 'components/buttons'
-import { PageTitle } from 'components/layout'
 
 const KafkaConnect = () => {
   const [host, setHost] = useState('');

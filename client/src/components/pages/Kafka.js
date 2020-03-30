@@ -1,8 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { Link } from '@reach/router'
+import React from 'react'
 
-import { LabeledInput } from 'components/inputs'
-import { Button } from 'components/buttons'
 import { PageTitle } from 'components/layout'
 
 const Kafka = ({children}) => {
